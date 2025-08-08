@@ -1,15 +1,12 @@
-from fastapi import FastAPI, Request, Form
-from fastapi.responses import HTMLResponse
-from fastapi.templating import Jinja2Templates
-import subprocess
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
 
 app = FastAPI()
-templates = Jinja2Templates(directory="templates")
 
-@app.get("/", response_class=HTMLResponse)
-def read_root():
-    return {"message": "PIXNET 自動發文系統運作中"}
+@app.get("/")
+def root():
+    return JSONResponse(content={"message": "PIXNET 自動發文系統已啟動"})
 
-@app.get("/dashboard", response_class=HTMLResponse)
-def dashboard(request: Request):
-    return templates.TemplateResponse("dashboard.html", {"request": request})
+@app.post("/post_article")
+def post_article():
+    return JSONResponse(content={"message": "文章已成功發佈！"})
